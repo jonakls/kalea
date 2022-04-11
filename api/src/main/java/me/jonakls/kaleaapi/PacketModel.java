@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 
 public interface PacketModel {
 
-    void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut);
-    void sendPacket(Player player, Object packet);
+    void sendTitle(Player player, TitleModel titleModel);
     void sendActionBar(Player player, String text);
+    void sendPacket(Player player, Object packet);
 
 }
