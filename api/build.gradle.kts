@@ -2,14 +2,16 @@ plugins {
     java
 }
 
+group = "me.jonakls"
+version = "1.0"
+
 repositories {
     mavenCentral()
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/groups/public/")
-    maven("https://repo.codemc.org/repository/maven-public/")
 }
-
 
 dependencies {
-    implementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+    compileOnly("net.md-5:bungeecord-chat:1.8-SNAPSHOT")
 }
-
