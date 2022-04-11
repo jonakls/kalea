@@ -1,6 +1,7 @@
 package me.jonakls.kaleabukkit.reflect;
 
 import me.jonakls.kaleaapi.PacketModel;
+import me.jonakls.kaleaapi.TitleModel;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -52,13 +53,10 @@ public class PacketsReflect implements PacketModel {
     }
 
     @Override
-    public void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+    public void sendTitle(Player player, TitleModel titleModel) {
         Constructor<?> subtitleConstructor;
         Object titlePacket;
         Object subtitlePacket;
-
-        title = title.replaceAll("%player%", player.getName());
-        subtitle = subtitle.replaceAll("%player%", player.getName());
 
         try {
             subtitleConstructor = PACKET_OUT_TITLE.getConstructor(
@@ -68,10 +66,10 @@ public class PacketsReflect implements PacketModel {
                     Integer.TYPE,
                     Integer.TYPE);
             titlePacket = subtitleConstructor.newInstance(TITLE_FIELD.get(null),
-                    getChatComponent("{\"text\":\"" + title + "\"}"),
-                    fadeIn,
-                    stay,
-                    fadeOut);
+                    getChatComponent("{\"text\":\"" + titleModel.getTitle() + "\"}"),
+                    titleModel.getFadeIn(),
+                    titleModel.getStay(),
+                    titleModel.getFadeOut());
             subtitleConstructor = PACKET_OUT_TITLE.getConstructor(
                     PACKET_OUT_TITLE_CLASS,
                     CHAT_COMPONENT,
@@ -79,10 +77,10 @@ public class PacketsReflect implements PacketModel {
                     Integer.TYPE,
                     Integer.TYPE);
             subtitlePacket = subtitleConstructor.newInstance(SUBTITLE_FIELD.get(null),
-                    getChatComponent("{\"text\":\"" + subtitle + "\"}"),
-                    fadeIn,
-                    stay,
-                    fadeOut);
+                    getChatComponent("{\"text\":\"" + titleModel.getSubtitle() + "\"}"),
+                    titleModel.getFadeIn(),
+                    titleModel.getStay(),
+                    titleModel.getFadeOut());
             sendPacket(player, titlePacket);
             sendPacket(player, subtitlePacket);
         } catch (Exception e) {
@@ -94,8 +92,6 @@ public class PacketsReflect implements PacketModel {
     public void sendActionBar(Player player, String text) {
         Constructor<?> actionBarConstructor;
         Object actionBarPacket;
-
-        text = text.replaceAll("%player%", player.getName());
 
         try {
             actionBarConstructor = PACKET_OUT_CHAT.getConstructor(CHAT_COMPONENT, Byte.TYPE);
