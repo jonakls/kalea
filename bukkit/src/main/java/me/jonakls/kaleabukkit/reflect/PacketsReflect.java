@@ -27,7 +27,7 @@ public class PacketsReflect implements PacketModel {
         try {
             TITLE_FIELD = PACKET_OUT_TITLE_CLASS.getField("SUBTITLE");
             SUBTITLE_FIELD = PACKET_OUT_TITLE_CLASS.getField("TITLE");
-            CHAT_COMPONENT_SERIALIZER = CHAT_BASE_COMPONENT.getMethod("a", String.class);
+            CHAT_COMPONENT_SERIALIZER = CHAT_COMPONENT.getMethod("a", String.class);
         } catch (NoSuchFieldException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class PacketsReflect implements PacketModel {
         try {
             subtitleConstructor = PACKET_OUT_TITLE.getConstructor(
                     PACKET_OUT_TITLE_CLASS,
-                    CHAT_COMPONENT,
+                    CHAT_BASE_COMPONENT,
                     Integer.TYPE,
                     Integer.TYPE,
                     Integer.TYPE);
@@ -72,7 +72,7 @@ public class PacketsReflect implements PacketModel {
                     titleModel.getFadeOut());
             subtitleConstructor = PACKET_OUT_TITLE.getConstructor(
                     PACKET_OUT_TITLE_CLASS,
-                    CHAT_COMPONENT,
+                    CHAT_BASE_COMPONENT,
                     Integer.TYPE,
                     Integer.TYPE,
                     Integer.TYPE);
@@ -94,7 +94,7 @@ public class PacketsReflect implements PacketModel {
         Object actionBarPacket;
 
         try {
-            actionBarConstructor = PACKET_OUT_CHAT.getConstructor(CHAT_COMPONENT, Byte.TYPE);
+            actionBarConstructor = PACKET_OUT_CHAT.getConstructor(CHAT_BASE_COMPONENT, Byte.TYPE);
             actionBarPacket = actionBarConstructor.newInstance(
                     getChatComponent("{\"text\":\"" + text + "\"}"),
                     (byte) 2
