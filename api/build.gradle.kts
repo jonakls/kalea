@@ -1,5 +1,6 @@
 plugins {
     java
+    `maven-publish`
 }
 
 group = "me.jonakls"
@@ -14,4 +15,17 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.8-SNAPSHOT")
+}
+
+publishing {
+    publications.create<MavenPublication>("maven") {
+        from(components["java"])
+        artifactId = "kalea-text-api"
+    }
+}
+
+tasks {
+    jar {
+        archiveBaseName.set("kalea-text-api")
+    }
 }
