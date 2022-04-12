@@ -7,6 +7,7 @@ plugins {
 group = "me.jonakls"
 version = "1.0"
 
+
 repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -15,7 +16,6 @@ repositories {
 
 dependencies {
     implementation(project(":api"))
-    implementation("com.google.inject:guice:4.0")
 
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     compileOnly("net.md-5:bungeecord-chat:1.8-SNAPSHOT")
@@ -24,5 +24,13 @@ dependencies {
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
+        artifactId = "kalea-text-bukkit"
+    }
+}
+
+tasks {
+    shadowJar {
+        archiveBaseName.set("kalea-text-bukkit")
+        minimize()
     }
 }
